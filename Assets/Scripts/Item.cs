@@ -24,7 +24,6 @@ public class Item : MonoBehaviour
         
         if(other.gameObject.tag == "Player")
         {
-            Debug.Log("isTrigger");
             if(player.isCatchItem == false)
             {
                 Transform item = this.gameObject.transform;

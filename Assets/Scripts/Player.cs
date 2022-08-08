@@ -29,6 +29,15 @@ public class Player : MonoBehaviour
         animator.SetFloat("y", -1f);
     }
 
+    public bool ItemCatchCheck()
+    {
+        if(isCatchItem == true)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void SwitchReturnAnim(bool flag)
     {
         if(flag) // isRturnがtrueなら↓から↑へ
