@@ -53,8 +53,10 @@ public class BGMSoundData
     public enum BGM
     {
         Title,
-        Dungeon,
-        Hoge, // これがラベルになる
+        STAGE1,
+        STAGE2,
+        STAGE3,
+        RESULT,
     }
 
     public BGM bgm;
@@ -68,9 +70,13 @@ public class SESoundData
 {
     public enum SE
     {
-        Attack,
+        Jump,
         Damage,
-        Hoge, // これがラベルになる
+        ItemGet,
+        ButtonPush,
+        GameStart,
+        Goal,
+        Tent,
     }
 
     public SE se;

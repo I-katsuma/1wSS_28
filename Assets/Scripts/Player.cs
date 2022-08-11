@@ -8,14 +8,24 @@ public class Player : MonoBehaviour
     public float myMoveSpeed = 3f;
 
     public Transform CatchItemPoint;
-    [SerializeField] private SpriteRenderer spacemanSprite;
-    [SerializeField] private Collider2D SpacemanCollider;
-    [SerializeField] private Animator animator;
+
+    [SerializeField]
+    private SpacemanManager spacemanManager;
+
+    [SerializeField]
+    private SpriteRenderer spacemanSprite;
+
+    [SerializeField]
+    private Collider2D SpacemanCollider;
+
+    [SerializeField]
+    private Animator animator;
     private Vector3 move = Vector3.zero;
 
     public bool isReturn = false; // 折り返しフラグ
 
-    public bool isCatchItem = false; // アイテム所持判定
+    [SerializeField]
+    private bool isCatchItem = false; // アイテム所持判定
 
     // 移動制限用
     private Vector2 playerPos;
@@ -23,24 +33,48 @@ public class Player : MonoBehaviour
     private readonly float PosYUpClamp = 2.5f;
     private readonly float PosYDownClamp = -25.5f;
 
+    // 行動管理
+    public enum PLAYER_MODE
+    {
+        STOP,
+        MOVE,
+        DANCE,
+    }
+
+    public PLAYER_MODE mode = PLAYER_MODE.STOP;
+
     void Start()
     {
         isCatchItem = false;
         animator.SetFloat("y", -1f);
+
     }
 
-    public bool ItemCatchCheck()
+    public bool ItemCatchCheck() // あくまでチェック用
     {
-        if(isCatchItem == true)
+        if (isCatchItem == true)
         {
             return true;
         }
         return false;
     }
 
-    public void SwitchReturnAnim(bool flag)
+    public void SetItemCatchFlag(bool flag) // オンオフ用
     {
-        if(flag) // isRturnがtrueなら↓から↑へ
+        if (flag)
+        {
+            isCatchItem = true;
+        }
+        else
+        {
+            isCatchItem = false;
+            spacemanManager.RemoveItem();
+        }
+    }
+
+    public void SwitchReturnAnim(bool flag) // Playerスプライトの向きを変える
+    {
+        if (flag) // isRturnがtrueなら↓から↑へ
         {
             isReturn = true;
             animator.SetFloat("y", 1);
@@ -54,10 +88,12 @@ public class Player : MonoBehaviour
 
     public void ItemCatchAction(bool flag)
     {
-        if(flag)
+        // アイテムを取得したら折り返しアクション(↓方向進行時のみ)
+        if (flag)
         {
             isCatchItem = true;
-            if(isReturn == false)
+            spacemanManager.SetItem();
+            if (isReturn == false)
             {
                 SwitchReturnAnim(true);
             }
@@ -66,43 +102,40 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(isReturn)
+        if (mode == PLAYER_MODE.MOVE)
         {
-            this.transform.Translate(Vector3.up * Time.deltaTime * myMoveSpeed);
-        }
-        else
-        {
-            this.transform.Translate(Vector3.down * Time.deltaTime * myMoveSpeed);
-        }
-        
-        this.MovingRestrictions();
-        
-        if(this.move != Vector3.zero)
-        {
-            this.transform.Translate(this.move * Time.deltaTime * myMoveSpeed);
+            if (isReturn)
+            {
+                this.transform.Translate(Vector3.up * Time.deltaTime * myMoveSpeed);
+            }
+            else
+            {
+                this.transform.Translate(Vector3.down * Time.deltaTime * myMoveSpeed);
+            }
 
-            /*
-            if(this.move.x > 0) {
-                this.transform.position = new Vector3(Time.deltaTime * myMoveSpeed, 
-                this.transform.position.y,
-                0);
+            this.MovingRestrictions();
+
+            if (this.move != Vector3.zero)
+            {
+                this.transform.Translate(this.move * Time.deltaTime * myMoveSpeed);
             }
-            else if(this.move.x < 0) {
-                this.transform.position = new Vector3(Time.deltaTime * -myMoveSpeed, 
-                this.transform.position.y,
-                0);
-            }
-            */
         }
-        
+        else if(mode == PLAYER_MODE.STOP)
+        {
+            return;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         this.move = context.ReadValue<Vector2>();
-        var normalized = new Vector3(Mathf.Round(move.normalized.x), Mathf.Round(move.normalized.y), 0);
+        var normalized = new Vector3(
+            Mathf.Round(move.normalized.x),
+            Mathf.Round(move.normalized.y),
+            0
+        );
 
-        if(normalized != Vector3.zero) // アニメ設定
+        if (normalized != Vector3.zero) // アニメ設定
         {
             this.animator.SetFloat("x", normalized.x);
             this.animator.SetFloat("y", normalized.y);
@@ -110,7 +143,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動制限 
+    /// 移動制限
     /// </summary>
     private void MovingRestrictions()
     {
