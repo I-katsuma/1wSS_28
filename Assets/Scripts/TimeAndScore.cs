@@ -111,7 +111,7 @@ public class TimeAndScore : MonoBehaviour
             clearM = PlayerPrefs.GetInt("BEST_MINUTE_03", 0);
             clearS = PlayerPrefs.GetFloat("BEST_SECONDES_03", 0);
         }
-        //Debug.Log(clearM.ToString("00") + ":" + ((int)clearS).ToString("00"));
+        Debug.Log(clearM.ToString("00") + ":" + ((int)clearS).ToString("00"));
         ClearTimeText.text = clearM.ToString("00") + ":" + ((int)clearS).ToString("00");
     }
 
@@ -121,6 +121,7 @@ public class TimeAndScore : MonoBehaviour
         {
             if (isClearCheck)
             {
+                // Updateから抜ける
                 return;
             }
             else if (isClearCheck == false)
@@ -131,7 +132,7 @@ public class TimeAndScore : MonoBehaviour
                 GoalPanel.SetActive(true);
                 TimerRecode(); // 時間記録
                 ClearLapApper(); // 記録表示
-                isClearCheck = true;
+                isClearCheck = true; // クリアフラグをたてると…
                 return;
             }
         }
