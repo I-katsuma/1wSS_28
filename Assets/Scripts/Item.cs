@@ -7,9 +7,14 @@ public class Item : MonoBehaviour
 {
     private Vector3 itemPos;
 
-    [SerializeField] private Player player;
-    [SerializeField] private GameObject itemShadow;
-    [SerializeField] private Transform ItemsGameObject;
+    [SerializeField]
+    private Player player;
+
+    [SerializeField]
+    private GameObject itemShadow;
+
+    [SerializeField]
+    private Transform ItemsGameObject;
 
     // Start is called before the first frame update
     void Start()
@@ -27,19 +32,24 @@ public class Item : MonoBehaviour
         StartCoroutine("MoveItem");
     }
 
-
     IEnumerator MoveItem()
     {
         int num = 0; // while文のカウント用
         float moveNum = 0.30f;
         float playerPosX = player.transform.position.x;
 
-        if(playerPosX > 0) { moveNum = 0.30f; } // →移動
-        else if(playerPosX < 0) { moveNum = -0.30f; } // ←移動
-        while(num < 5)
+        if (playerPosX > 0)
+        {
+            moveNum = 0.30f;
+        } // →移動
+        else if (playerPosX < 0)
+        {
+            moveNum = -0.30f;
+        } // ←移動
+        while (num < 5)
         {
             itemPos = this.transform.position;
-            if(itemPos.x > 2.0f || itemPos.x < -2.0f) // 範囲外対策？（未検査）
+            if (itemPos.x > 2.0f || itemPos.x < -2.0f) // 範囲外対策？（未検査）
             {
                 num += 5;
             }
@@ -47,19 +57,29 @@ public class Item : MonoBehaviour
             num++;
             yield return new WaitForSeconds(0.01f);
         }
+        if (itemPos.x > 2.0f) // 範囲外対策？（未検査）
+        {
+            itemPos.x = 2.0f;
+        }
+        else if(itemPos.x < -2.0f)
+        {
+            itemPos.x = -2.0f;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        
-        if(other.gameObject.tag == "Player")
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
         {
-            if(player.ItemCatchCheck() == false)
+            if (player.ItemCatchCheck() == false)
             {
                 Transform item = this.gameObject.transform;
                 item.SetParent(player.CatchItemPoint.transform);
                 item.transform.position = new Vector3(
                     player.CatchItemPoint.position.x,
-                     player.CatchItemPoint.position.y, 0);
+                    player.CatchItemPoint.position.y,
+                    0
+                );
                 itemShadow.SetActive(false);
                 player.ItemCatchAction(true);
                 AudioManager.Instance.PlaySE(SESoundData.SE.ItemGet);
@@ -70,6 +90,7 @@ public class Item : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         /*

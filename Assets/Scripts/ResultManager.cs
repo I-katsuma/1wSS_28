@@ -58,15 +58,32 @@ public class ResultManager : MonoBehaviour
             totalM += clearM[i];
             totalS += clearS[i];            
         }
-        
+        Debug.Log("totalM:" + totalM);
+        Debug.Log("totalS:" + (int)totalS);
         float Num = 0;
+        float Snum = 0;
         if(totalS > 60)
         {
-            Num = totalS % 60;
-
+            Num = totalS / 60;
+            Snum = totalS - 60f;
         }
-        int minNum = ( + totalM) * 100;
+        int minNum = ((int)Num + totalM) * 100;
+        int tNum = minNum + (int)Snum;
 
+        if(tNum < 200)
+        {
+            RankText.text = "S";
+        }else if(tNum >= 200 && tNum < 260)
+        {
+            RankText.text = "A";
+        }else if(tNum >= 260)
+        {
+            RankText.text = "B";
+        }
+
+
+        Debug.Log("Num:" + Num + " Snum:" + Snum);
+        Debug.Log("tNum:" + tNum + " = " + minNum + " + " + (int)Snum);
         /*        
         float num = 0;
         if(totalS > 60)
