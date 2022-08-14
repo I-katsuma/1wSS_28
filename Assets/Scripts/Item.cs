@@ -49,14 +49,25 @@ public class Item : MonoBehaviour
         while (num < 5)
         {
             itemPos = this.transform.position;
-            if (itemPos.x > 2.0f || itemPos.x < -2.0f) // 範囲外対策？（未検査）
+            if (itemPos.x > 2.0f) // 範囲外対策
             {
-                num += 5;
+                itemPos = new Vector2(2.0f, this.transform.position.y);
+                Debug.Log("whileループおわり");
+                //num += 5; // ループをを終わらせる
+                break;
+            }
+            else if(itemPos.x < -2.0f)
+            {
+                itemPos = new Vector2(-2.0f, this.transform.position.y);
+                Debug.Log("Whileループおわり");
+                //num += 5;
+                break;
             }
             this.transform.Translate(moveNum, 0, 0);
             num++;
             yield return new WaitForSeconds(0.01f);
         }
+        /*
         if (itemPos.x > 2.0f) // 範囲外対策？（未検査）
         {
             itemPos.x = 2.0f;
@@ -65,6 +76,7 @@ public class Item : MonoBehaviour
         {
             itemPos.x = -2.0f;
         }
+        */
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -91,26 +103,4 @@ public class Item : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        /*
-        var current = Keyboard.current;
-                // キーボード接続チェック
-        if (current == null)
-        {
-            // キーボードが接続されていないと
-            // Keyboard.currentがnullになる
-            return;
-        }
-
-        // Aキーの入力状態取得
-        var fKey = current.fKey;
-
-        // Aキーが押された瞬間かどうか
-        if (fKey.wasPressedThisFrame)
-        {
-            DropItem();
-        }
-        */
-    }
 }

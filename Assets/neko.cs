@@ -10,12 +10,11 @@ public class neko : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(GameManager.Instance.state == GameManager.SCENE_STATE.STAGE2)
+        {
+            anim.SetBool("Sit", true);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
