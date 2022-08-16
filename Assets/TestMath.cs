@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class TestMath : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start() 
+    {
+        int num = 210;
+
+        Debug.Log("num :" + Mathf.Round(num));
+    }
+
+
+    void TimeMath()
     {
         int minTotal = 2;
         int SecondsTotal = 0;
@@ -45,9 +53,5 @@ public class TestMath : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

@@ -55,7 +55,7 @@ public class TimeAndScore : MonoBehaviour
         StartPanel.SetActive(false);
         player.mode = Player.PLAYER_MODE.MOVE;
         GameManager.Instance.TimerSwitchMethod(); // タイムON
-        AudioManager.Instance.PlaySE(SESoundData.SE.ButtonPush);
+        AudioManager.Instance.PlaySE(SESoundData.SE.ButtonPush2);
     }
 
     private void TimerInit()

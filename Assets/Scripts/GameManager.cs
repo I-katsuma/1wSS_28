@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public bool isStageClear = false;
 
+    public int isOteTsuki { get; set; }
+
     public enum SCENE_STATE
     {
         TITLE,
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
     public void initialize() // 初期化
     {
         nowItemCount = 0;
+        isOteTsuki = 0;
         isStageClear = false;
     }
 

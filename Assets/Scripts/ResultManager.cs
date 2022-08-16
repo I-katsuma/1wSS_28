@@ -20,13 +20,18 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     private Text RankText;
 
-    [SerializeField] private Text nekoSerifu;
+    [SerializeField] GameObject LeaderBoardPanel;
+
 
     private int[] clearM;
     private float[] clearS;
 
+    public int RankScore = 0;
+    public int minTvalue = 0;
+    public int secTvalue = 0;
     private void initialize()
     {
+        RankScore = 0;
         clearM = new int[] { 0, 0, 0 };
         clearS = new float[] { 0, 0, 0 };
     }
@@ -99,8 +104,8 @@ public class ResultManager : MonoBehaviour
         var numB = Mathf.Floor((float) num60Div);
         Debug.Log("numb: " + numB);
 
-        int minTvalue = (int)numB + (int)totalMin; // 分の合計値
-        int secTvalue = (int)secTotalnum;
+        minTvalue = (int)numB + (int)totalMin; // 分の合計値
+        secTvalue = (int)secTotalnum;
 
         TotalTime.text =
             "TOTAL  " + minTvalue.ToString("00") + ":" + secTvalue.ToString("00");
@@ -111,20 +116,31 @@ public class ResultManager : MonoBehaviour
     private void RankCheck(int minT, int secT)
     {
         int numA = minT * 100;
-        int RankNum = numA + secT;
+        RankScore = numA + secT;
 
-        if(RankNum < 220)
+        if(RankScore < 220 && RankScore > 50)
         {
             RankText.text = "S";
-        }else if(RankNum >= 220 && RankNum < 270)
+        }else if(RankScore >= 220 && RankScore < 270)
         {
             RankText.text = "A";
-        }else if(RankNum >= 270)
+        }else if(RankScore >= 270)
         {
             RankText.text = "B";
         }
+        else if(RankScore <= 50)
+        {
+            RankText.text = "ERROR";
+            RankScore = 1000;
+        }
     }
 
+    public void LeaderBoardPanelSwitch(bool x)
+    {
+        AudioManager.Instance.PlaySE(SESoundData.SE.ButtonPush);
+        LeaderBoardPanel.SetActive(x);
+
+    }
 
     /*
     private void TotalLapApper()

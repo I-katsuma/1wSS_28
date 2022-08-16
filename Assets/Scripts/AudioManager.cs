@@ -77,6 +77,7 @@ public class SESoundData
         GameStart,
         Goal,
         Tent,
+        ButtonPush2,
     }
 
     public SE se;

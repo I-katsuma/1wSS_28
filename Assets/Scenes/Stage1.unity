@@ -2003,17 +2003,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891950112}
   m_CullTransparentMesh: 1
---- !u!114 &895843192 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-  m_PrefabInstance: {fileID: 1729900950072843097}
+--- !u!1 &895843190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895843191}
+  - component: {fileID: 895843192}
+  m_Layer: 0
+  m_Name: TimeBoardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &895843191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895843190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &895843192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895843190}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e60c228aa73194b9d94c7a44df8cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemCountText: {fileID: 2027447403}
+  MaxItemCount: 3
+  minute: 0
+  seconds: 0
+  TimerText: {fileID: 615479871}
+  ClearTimeText: {fileID: 340072661}
+  StartPanel: {fileID: 1438850830}
+  GoalPanel: {fileID: 1417261393}
+  player: {fileID: 1555785408}
 --- !u!1 &944406019
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,6 +2509,7 @@ GameObject:
   - component: {fileID: 1193662949}
   - component: {fileID: 1193662948}
   - component: {fileID: 1193662947}
+  - component: {fileID: 1193662950}
   m_Layer: 5
   m_Name: NextStageButton
   m_TagString: Untagged
@@ -2589,6 +2632,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193662945}
   m_CullTransparentMesh: 1
+--- !u!114 &1193662950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193662945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458e24239d4376945a9cca763515b669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202104780
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,7 +3348,7 @@ SpriteRenderer:
   m_Size: {x: 3.3899999, y: 1.9305527}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1343169728
@@ -5320,93 +5375,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 648923014701275471, guid: b6103a24582ba314fb33aad499270d5e, type: 3}
-      propertyPath: seSoundDatas.Array.data[1].volume
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6103a24582ba314fb33aad499270d5e, type: 3}
---- !u!1001 &1729900950072843097
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1555785408}
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: GoalPanel
-      value: 
-      objectReference: {fileID: 1417261393}
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: TimerText
-      value: 
-      objectReference: {fileID: 615479871}
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: StartPanel
-      value: 
-      objectReference: {fileID: 1438850830}
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: ClearTimeText
-      value: 
-      objectReference: {fileID: 340072661}
-    - target: {fileID: 1729900949857017889, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: ItemCountText
-      value: 
-      objectReference: {fileID: 2027447403}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017902, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729900949857017903, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
-      propertyPath: m_Name
-      value: TimeBoardManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e964628fdbde6c246b99b458b6d18845, type: 3}
 --- !u!1001 &3080326562484375437
 PrefabInstance:
   m_ObjectHideFlags: 0

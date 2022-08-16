@@ -210,7 +210,7 @@ Transform:
   - {fileID: 1209946397}
   - {fileID: 1079717156}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &179129442
 GameObject:
@@ -850,7 +850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3445,6 +3445,7 @@ GameObject:
   - component: {fileID: 1193662949}
   - component: {fileID: 1193662948}
   - component: {fileID: 1193662947}
+  - component: {fileID: 1193662950}
   m_Layer: 5
   m_Name: NextStageButton
   m_TagString: Untagged
@@ -3567,6 +3568,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193662945}
   m_CullTransparentMesh: 1
+--- !u!114 &1193662950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193662945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458e24239d4376945a9cca763515b669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202104780
 GameObject:
   m_ObjectHideFlags: 0
@@ -3937,7 +3950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1277812702
 GameObject:
@@ -4337,7 +4350,7 @@ SpriteRenderer:
   m_Size: {x: 3.3899999, y: 1.9305527}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1343169728
@@ -5757,7 +5770,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856455434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26, y: -0.59, z: 0}
+  m_LocalPosition: {x: 0.35, y: -0.77, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6340,7 +6353,7 @@ Transform:
   - {fileID: 1928537062}
   - {fileID: 969536798}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974700416
 GameObject:
