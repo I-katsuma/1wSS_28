@@ -1,11 +1,22 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
 
 public class PlayfabLogin : MonoBehaviour
 {
+    [SerializeField] private GameObject NameInputFieldPanel;
+
+    [SerializeField] private GameObject LeaderBoardTable;
+    
+    [SerializeField] private InputField nameInput; 
+
+    private int minTrank;
+    private int secTrank;
+
     private readonly string isRankingName = "MoonCamperRanking";
 
     [SerializeField]
@@ -14,10 +25,29 @@ public class PlayfabLogin : MonoBehaviour
     [SerializeField]
     private ResultManager resultManager;
 
+    public GameObject rowPrefab;
+    public Transform rowsParent;
+
     private void Start()
     {
-        errorText.SetActive(false);
+        LeaderBoardTable.SetActive(true);
+        NameInputFieldPanel.SetActive(false);
+        minTrank = resultManager.minTvalue;
+        secTrank = resultManager.secTvalue;
+
+        ErrorSet(false);
         //Login();
+    }
+
+    public void ErrorSet(bool x)
+    {
+        errorText.SetActive(x);
+    }
+
+    public void CloseMiniTablePanel()
+    {
+        NameInputFieldPanel.SetActive(false);
+        
     }
 
     public void Login()
@@ -25,14 +55,33 @@ public class PlayfabLogin : MonoBehaviour
         var request = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
+            CreateAccount = true,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams {
+                GetPlayerProfile = true
+            }
         };
         PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
     }
 
     void OnSuccess(LoginResult result)
     {
+        SendLeaderBoard(resultManager.RankScore);
+        //GetLeaderBoard();
+        //LeaderBoardTable.SetActive(false);
+
+        string name = null;
+        if(result.InfoResultPayload.PlayerProfile != null)
+        {
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        }
+
+        if(name == null)
+        {
+            NameInputFieldPanel.SetActive(true);
+        }
+
         Debug.Log("ログイン成功/アカウント作成");
+        /*
         if (resultManager.RankScore < 50 ||  resultManager.RankScore == 1000)
         {
             errorText.SetActive(true);
@@ -40,8 +89,9 @@ public class PlayfabLogin : MonoBehaviour
         else
         {
             SendLeaderBoard(resultManager.RankScore);
-            SaveAppearance();
-        }
+            //SaveAppearance();
+       }
+       */
     }
 
     void OnError(PlayFabError error)
@@ -49,6 +99,24 @@ public class PlayfabLogin : MonoBehaviour
         Debug.Log("ログイン失敗");
         errorText.SetActive(true);
     }
+
+    public void SubmitNameButton()
+    {
+        // ユーザー名の更新
+        var request = new UpdateUserTitleDisplayNameRequest {
+            DisplayName = nameInput.text,
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
+    }
+
+    void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
+    {
+        Debug.Log("Updated display name");
+        NameInputFieldPanel.SetActive(false);
+
+    }
+
+
 
     public void SendLeaderBoard(int score)
     {
@@ -74,7 +142,7 @@ public class PlayfabLogin : MonoBehaviour
         {
             StatisticName = isRankingName,
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 8
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardGet, OnError);
     }
@@ -83,24 +151,26 @@ public class PlayfabLogin : MonoBehaviour
     {
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log(
-                "Rank: "
-                    + item.Position
-                    + 1
-                    + "  ID: "
-                    + item.PlayFabId
-                    + " Score: "
-                    + item.StatValue
-            );
+
+            GameObject newGo = Instantiate(rowPrefab, rowsParent);
+            Text[] texts = newGo.GetComponentsInChildren<Text>();
+
+            texts[0].text = item.Position + 1.ToString();
+            texts[1].text = item.DisplayName; // item.PlayFabId;
+
+            var span = new TimeSpan(0, 0, item.StatValue);
+            texts[2].text = span.ToString(@"mm\:ss");
+            Debug.Log("リーダーボートの取得に成功");
         }
     }
 
+    /*
     public void SaveAppearance() 
     {
         var request = new UpdateUserDataRequest {
-            Data = new Dictionary<string, string> {
-                {"minT", resultManager.minTvalue.ToString()},
-                {"secT", resultManager.secTvalue.ToString()}
+            Data = new Dictionary<string, int> {
+                {"minT", minTrank},
+                {"secT", secTrank}
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnDateSend, OnError);
@@ -119,7 +189,11 @@ public class PlayfabLogin : MonoBehaviour
 
     void OnDataRecieved(GetUserDataResult result)
     {
+        minTvalue = result.Data["minT"].Value;
+        secTvalue = result.Data["secT"].Value;
+
         Debug.Log("ユーザーデータを受け取りました!");
         Debug.Log("minT: " + result.Data["minT"].Value + " secT: " + result.Data["secT"].Value);
     }
+    */
 }

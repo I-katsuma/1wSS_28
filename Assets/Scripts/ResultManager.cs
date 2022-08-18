@@ -20,8 +20,14 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     private Text RankText;
 
-    [SerializeField] GameObject LeaderBoardPanel;
+    [SerializeField]
+    GameObject ErrorText;
 
+    [SerializeField]
+    GameObject LeaderBoardPanel;
+
+    [SerializeField]
+    PlayfabLogin playfabLogin;
 
     private int[] clearM;
     private float[] clearS;
@@ -29,6 +35,7 @@ public class ResultManager : MonoBehaviour
     public int RankScore = 0;
     public int minTvalue = 0;
     public int secTvalue = 0;
+
     private void initialize()
     {
         RankScore = 0;
@@ -76,59 +83,60 @@ public class ResultManager : MonoBehaviour
             totalSec += Mathf.Floor(clearS[i]);
         }
 
-        Debug.Log("totalMin: " + totalMin);
-        Debug.Log("totalSec: " + totalSec);
+        //Debug.Log("totalMin: " + totalMin);
+        //Debug.Log("totalSec: " + totalSec);
 
         // 秒の処理
         double num60Div = Mathf.Floor(totalSec) / 60.0;
         // 桁数調整
         double FLnum60Div = Mathf.Floor((float)num60Div * Mathf.Pow(10, 2)) / Mathf.Pow(10, 2);
-        
-        Debug.Log("num60Div: " + num60Div);
-        Debug.Log("FLnum60Div: " + FLnum60Div);
+
+        //Debug.Log("num60Div: " + num60Div);
+        //Debug.Log("FLnum60Div: " + FLnum60Div);
 
         // 行程A(秒) 小数点部分のみ抽出
-        float valueA = (float) FLnum60Div;
+        float valueA = (float)FLnum60Div;
         valueA = valueA - Mathf.Floor(valueA);
-        Debug.Log("valueA: " + valueA);
+        //Debug.Log("valueA: " + valueA);
         // 桁数調整
         //double FLnumSec = Mathf.Floor(valueA * Mathf.Pow(10, 2)) / Mathf.Pow(10, 2);
         //Debug.Log("FLnumSec: " + FLnumSec
-        
+
         // 60掛けて四捨五入 秒のトータル値
         var secTotalnum = Mathf.Round((float)valueA * 60.0f);
-        Debug.Log("secTotalnum: " + secTotalnum);
+        //Debug.Log("secTotalnum: " + secTotalnum);
 
 
         // 行程B(分) num60divを整数のみに
-        var numB = Mathf.Floor((float) num60Div);
-        Debug.Log("numb: " + numB);
+        var numB = Mathf.Floor((float)num60Div);
+        //Debug.Log("numb: " + numB);
 
         minTvalue = (int)numB + (int)totalMin; // 分の合計値
         secTvalue = (int)secTotalnum;
 
-        TotalTime.text =
-            "TOTAL  " + minTvalue.ToString("00") + ":" + secTvalue.ToString("00");
+        TotalTime.text = "TOTAL  " + minTvalue.ToString("00") + ":" + secTvalue.ToString("00");
 
         RankCheck(minTvalue, secTvalue);
     }
 
     private void RankCheck(int minT, int secT)
     {
-        int numA = minT * 100;
+        int numA = minT * 60;
         RankScore = numA + secT;
 
-        if(RankScore < 220 && RankScore > 50)
+        if (RankScore < 120 && RankScore > 50)
         {
             RankText.text = "S";
-        }else if(RankScore >= 220 && RankScore < 270)
+        }
+        else if (RankScore >= 120 && RankScore < 200)
         {
             RankText.text = "A";
-        }else if(RankScore >= 270)
+        }
+        else if (RankScore >= 200)
         {
             RankText.text = "B";
         }
-        else if(RankScore <= 50)
+        else if (RankScore <= 50)
         {
             RankText.text = "ERROR";
             RankScore = 1000;
@@ -139,7 +147,6 @@ public class ResultManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySE(SESoundData.SE.ButtonPush);
         LeaderBoardPanel.SetActive(x);
-
     }
 
     /*
@@ -190,5 +197,16 @@ public class ResultManager : MonoBehaviour
         Day2LapApper();
         Day3LapApper();
         TotalLapApper();
+
+        Debug.Log("RankScore: " + RankScore);
+        if (RankScore < 50 || RankScore >= 1000)
+        {
+            ErrorText.SetActive(true);
+            Debug.Log("エラーテキスト表示");
+        }
+        else
+        {
+            playfabLogin.Login();
+        }
     }
 }

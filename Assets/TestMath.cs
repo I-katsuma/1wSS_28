@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class TestMath : MonoBehaviour
 {
 
     private void Start() 
     {
-        int num = 210;
+        var seconds = 210;
+        var span = new TimeSpan(0, 0, seconds);
 
-        Debug.Log("num :" + Mathf.Round(num));
+        var hhmmss = span.ToString(@"mm\:ss");
+        Debug.Log(hhmmss);
     }
 
 
