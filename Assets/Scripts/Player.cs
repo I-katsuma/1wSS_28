@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool isCatchItem = false; // アイテム所持判定
 
+    [SerializeField] GameObject UpArrow;
+    [SerializeField] GameObject DownArrow;
+
     // 移動制限用
     private Vector2 playerPos;
     private readonly float PosXClamp = 2.0f;
@@ -45,9 +48,19 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        isCatchItem = false;
-        animator.SetFloat("y", -1f);
+        //UpArrow.SetActive(false);
+        //DownArrow.SetActive(false);
 
+        isCatchItem = false;
+        ArrowSwitch(false);
+        animator.SetFloat("y", -1f);
+    }
+
+
+    void ArrowSwitch(bool x) // 矢印の向き
+    {
+        UpArrow.SetActive(x);
+        DownArrow.SetActive(!x);       
     }
 
     public bool ItemCatchCheck() // あくまでチェック用
@@ -77,11 +90,13 @@ public class Player : MonoBehaviour
         if (flag) // isRturnがtrueなら↓から↑へ
         {
             isReturn = true;
+            ArrowSwitch(true);
             animator.SetFloat("y", 1);
         }
         else // ↑から↓へ
         {
             isReturn = false;
+            ArrowSwitch(false);
             animator.SetFloat("y", -1);
         }
     }

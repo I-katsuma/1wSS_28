@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ResultManager : MonoBehaviour
 {
@@ -33,8 +34,11 @@ public class ResultManager : MonoBehaviour
     private float[] clearS;
 
     public int RankScore = 0;
+    public int TimeScore = 0;
     public int minTvalue = 0;
     public int secTvalue = 0;
+
+    [SerializeField] RectTransform rectTransform;
 
     private void initialize()
     {
@@ -116,32 +120,70 @@ public class ResultManager : MonoBehaviour
 
         TotalTime.text = "TOTAL  " + minTvalue.ToString("00") + ":" + secTvalue.ToString("00");
 
+        //RankCheck2(minTvalue, secTvalue);
         RankCheck(minTvalue, secTvalue);
     }
 
-    private void RankCheck(int minT, int secT)
-    {
-        int numA = minT * 60;
-        RankScore = numA + secT;
 
-        if (RankScore < 120 && RankScore > 50)
+    /*
+    public void RankCheck2(int minT, int SecT) // RankScore
+    {
+        int score = 0;
+        switch (minT)
+        {
+            case 0:
+            score = 100;
+            break;
+            case 1:
+            score = 50;
+            break;
+            case 2:
+            score = 25;
+            break;
+            default:
+            score = 0;
+            break;
+        }
+
+        RankScore = score + minT + SecT;
+        
+        if (RankScore > 150)
         {
             RankText.text = "S";
         }
-        else if (RankScore >= 120 && RankScore < 200)
+        else if (RankScore <= 150 && RankScore > 100)
         {
             RankText.text = "A";
         }
-        else if (RankScore >= 200)
+        else if (RankScore <= 100)
         {
             RankText.text = "B";
         }
-        else if (RankScore <= 50)
+    }
+    */
+
+    private void RankCheck(int minT, int secT) // TimeScore
+    {
+        int num60 = minT * 60;
+        int timeTotal = num60 + secT;
+        Debug.Log("TimeTotal: " + timeTotal);
+        TimeScore = 500 - timeTotal;
+
+        if (TimeScore > 380)
         {
-            RankText.text = "ERROR";
-            RankScore = 1000;
+            RankText.text = "S";
+        }
+        else if (TimeScore <= 380 && TimeScore > 280)
+        {
+            RankText.text = "A";
+        }
+        else if (TimeScore <= 280)
+        {
+            RankText.text = "B";
         }
     }
+
+
 
     public void LeaderBoardPanelSwitch(bool x)
     {
@@ -190,6 +232,12 @@ public class ResultManager : MonoBehaviour
     }
     */
 
+    private void Awake() 
+    {
+        rectTransform.anchoredPosition = new Vector3(0, 880, 0);    
+    }
+
+
     void Start()
     {
         initialize();
@@ -199,14 +247,18 @@ public class ResultManager : MonoBehaviour
         TotalLapApper();
 
         Debug.Log("RankScore: " + RankScore);
-        if (RankScore < 50 || RankScore >= 1000)
+        Debug.Log("TimeScore: " + TimeScore);
+        playfabLogin.Login();
+
+        if(playfabLogin.Login() == true)
         {
-            ErrorText.SetActive(true);
-            Debug.Log("エラーテキスト表示");
+            // ShowWindow();
+            Invoke("ShowWindow", 2.5f);
         }
-        else
-        {
-            playfabLogin.Login();
-        }
+    }
+
+    void ShowWindow()
+    {
+        rectTransform.DOLocalMoveY(0f, 2f).SetEase(Ease.OutBounce);
     }
 }

@@ -58,17 +58,24 @@ public class SpacemanManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start() { }
-
-    // Update is called once per frame
-    void FixedUpdate()
+        // ゲームオブジェクトのレイヤーを取得する
+    public void GetLayer()
     {
-        /*
-        if(player.ItemCatchCheck())
-        {
-            SetItem();
-        }
-        */
+        Debug.Log(this.gameObject.layer);
     }
+ 
+    // ゲームオブジェクトのレイヤーを変更する
+    public void SetLayer(int layerNumber)
+    {
+        this.gameObject.layer = layerNumber;
+    }
+
+    /*
+    private void FixedUpdate() 
+    {
+        GetLayer();
+    }
+    */
+
+
 }
